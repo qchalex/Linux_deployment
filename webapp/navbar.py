@@ -2,7 +2,7 @@ import dash_bootstrap_components as dbc
 from dash import html
 import base64
 
-LOGO = 'linux-ar21.svg'
+LOGO = 'static/linux-ar21.svg'
 with open(LOGO, 'r') as f:
     svg_content = f.read()
 

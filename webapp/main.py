@@ -11,7 +11,7 @@ from style import SIDEBAR_STYLE, SIDEBAR_HIDDEN
 from layout import layout
 
 
-df = pd.read_csv(r"data\dataset.csv")
+df = pd.read_csv(r"../data/dataset.csv")
 df['TotalCharges'] = df['TotalCharges'].replace('', pd.NA)
 
 df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
