@@ -7,19 +7,17 @@ import plotly.express as px
 
 from navbar import navbar
 from sidebar import sidebar
-from style import SIDEBAR_STYLE, SIDEBAR_HIDDEN
+from webapp.style.sidebar_style import SIDEBAR_STYLE, SIDEBAR_HIDDEN
 from layout import layout
+from static.params import Paths
 
+data = pd.read_csv(Paths.PATH_TO_DATA)
+data['TotalCharges'] = data['TotalCharges'].replace('', pd.NA)
 
-df = pd.read_csv(r"../data/dataset.csv")
-df['TotalCharges'] = df['TotalCharges'].replace('', pd.NA)
-
-df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
-df['TotalCharges'] = df['TotalCharges'].astype(float)
+data['TotalCharges'] = pd.to_numeric(data['TotalCharges'], errors='coerce')
+data['TotalCharges'] = data['TotalCharges'].astype(float)
 
 app = dash.Dash(external_stylesheets=[dbc.themes.ZEPHYR, dbc.icons.BOOTSTRAP])
-# Change themes if wanted but the whole code is adapted for the Zephyr Theme.
-# dbc.icons allows to use the dbc icons : https://icons.getbootstrap.com/
 app.title = 'Linux Application'
 
 
@@ -42,7 +40,7 @@ app.layout = html.Div(  # layout with the others components.
 
 @app.callback(
     # Callback when we click on the sidebar button,
-    # It hides the sidebar by changing it with SIDEBAR_HIDDEN or STYLE in style.py
+    # It hides the sidebar by changing it with SIDEBAR_HIDDEN or STYLE in sidebar_style.py
     Output("sidebar", "style"),
     Output("side_click", "data"),
     Output("accordion_all", "style"),
@@ -118,7 +116,7 @@ def get_sidebar_value(value, element):
 )
 def update_graph(gender_value, senior_citizen_value, phone_service_value, internet_service_value, contract_value,
                  payment_method_value):
-    filtered_df = df.copy()
+    filtered_df = data.copy()
 
     if gender_value is not None:
         filtered_df = filtered_df[filtered_df['gender'] == get_sidebar_value(gender_value, "gender")]
@@ -143,8 +141,8 @@ def update_graph(gender_value, senior_citizen_value, phone_service_value, intern
 
     return fig
 
-
 # endregion
+
 
 if __name__ == '__main__':
     app.run_server(port=8050)

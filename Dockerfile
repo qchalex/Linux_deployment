@@ -13,7 +13,7 @@ COPY webapp/main.py .
 COPY webapp/layout.py .
 COPY webapp/sidebar.py .
 COPY webapp/navbar.py .
-COPY webapp/style.py .
+COPY webapp/style/sidebar_style.py .
 
 RUN python3 -m pip install -r requirements.txt
 CMD ["bash", "run.sh"]
