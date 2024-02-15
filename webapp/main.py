@@ -101,6 +101,11 @@ def get_sidebar_value(value, element):
         elif value == 3:
             return 'Two year'
 
+# endregion
+
+
+# region main callback
+
 
 @app.callback(
     Output('graph', 'figure'),
@@ -113,7 +118,7 @@ def get_sidebar_value(value, element):
 )
 def update_graph(gender_value, senior_citizen_value, phone_service_value, internet_service_value, contract_value,
                  payment_method_value):
-    filtered_df = df.copy()  # Copiez le DataFrame pour éviter de modifier l'original
+    filtered_df = df.copy()
 
     if gender_value is not None:
         filtered_df = filtered_df[filtered_df['gender'] == get_sidebar_value(gender_value, "gender")]
@@ -132,7 +137,6 @@ def update_graph(gender_value, senior_citizen_value, phone_service_value, intern
         filtered_df = filtered_df[
             filtered_df['PaymentMethod'] == get_sidebar_value(payment_method_value, "payment_method")]
 
-    # Créer le graphique
     fig = px.scatter(filtered_df, x='MonthlyCharges', y='TotalCharges', color='Churn',
                      title='Total Charges vs Monthly Charges',
                      labels={'MonthlyCharges': 'Monthly Charges', 'TotalCharges': 'Total Charges'})
