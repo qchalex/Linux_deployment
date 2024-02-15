@@ -6,7 +6,7 @@ RUN apt update && apt-get install -y curl && apt-get install -y python3 && apt-g
 WORKDIR /group4
 
 COPY requirements.txt .
-COPY run.sh .
+COPY launch.sh .
 COPY collect.sh .
 COPY transform.py .
 COPY webapp/main.py .
