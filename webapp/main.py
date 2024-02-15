@@ -10,6 +10,8 @@ from sidebar import sidebar
 from webapp.style.sidebar_style import SIDEBAR_STYLE, SIDEBAR_HIDDEN
 from layout import layout
 from static.params import Paths
+from static.get_sidebar_elements_value import GetSidebarElementsValue
+
 
 data = pd.read_csv(Paths.PATH_TO_DATA)
 data['TotalCharges'] = data['TotalCharges'].replace('', pd.NA)
@@ -59,46 +61,6 @@ def hide_or_show_sidebar_while_clicking_on_sidebar_button(n_clicks):
     return sidebar_style, cur_nclick, accordion_style
 
 
-def get_sidebar_value(value, element):
-    if element == "gender":
-        if value == 1:
-            return 'Male'
-        elif value == 2:
-            return 'Female'
-    elif element == "senior_citizen":
-        if value == 1:
-            return 0
-        elif value == 2:
-            return 1
-    elif element == "phone_service":
-        if value == 1:
-            return 'Yes'
-        elif value == 2:
-            return 'No'
-    elif element == "internet_service":
-        if value == 1:
-            return 'DSL'
-        elif value == 2:
-            return 'Fiber optic'
-        elif value == 3:
-            return 'No'
-    elif element == "payment_method":
-        if value == 1:
-            return 'Bank transfer (automatic)'
-        elif value == 2:
-            return 'Mailed check'
-        elif value == 3:
-            return 'Credit card (automatic)'
-        elif value == 4:
-            return 'Electronic check'
-    elif element == "contract":
-        if value == 1:
-            return 'Month-to-Month'
-        elif value == 2:
-            return 'One year'
-        elif value == 3:
-            return 'Two year'
-
 # endregion
 
 
@@ -116,30 +78,27 @@ def get_sidebar_value(value, element):
 )
 def update_graph(gender_value, senior_citizen_value, phone_service_value, internet_service_value, contract_value,
                  payment_method_value):
-    filtered_df = data.copy()
+
+    data_copy = data.copy()
 
     if gender_value is not None:
-        filtered_df = filtered_df[filtered_df['gender'] == get_sidebar_value(gender_value, "gender")]
+        data_copy = data_copy[data_copy['gender'] == GetSidebarElementsValue.get_sidebar_value(gender_value, "gender")]
     if senior_citizen_value is not None:
-        filtered_df = filtered_df[
-            filtered_df['SeniorCitizen'] == get_sidebar_value(senior_citizen_value, "senior_citizen")]
+        data_copy = data_copy[data_copy['SeniorCitizen'] == GetSidebarElementsValue.get_sidebar_value(senior_citizen_value, "senior_citizen")]
     if phone_service_value is not None:
-        filtered_df = filtered_df[
-            filtered_df['PhoneService'] == get_sidebar_value(phone_service_value, "phone_service")]
+        data_copy = data_copy[data_copy['PhoneService'] == GetSidebarElementsValue.get_sidebar_value(phone_service_value, "phone_service")]
     if internet_service_value is not None:
-        filtered_df = filtered_df[
-            filtered_df['InternetService'] == get_sidebar_value(internet_service_value, "internet_service")]
+        data_copy = data_copy[data_copy['InternetService'] == GetSidebarElementsValue.get_sidebar_value(internet_service_value, "internet_service")]
     if contract_value is not None:
-        filtered_df = filtered_df[filtered_df['Contract'] == get_sidebar_value(contract_value, "contract")]
+        data_copy = data_copy[data_copy['Contract'] == GetSidebarElementsValue.get_sidebar_value(contract_value, "contract")]
     if payment_method_value is not None:
-        filtered_df = filtered_df[
-            filtered_df['PaymentMethod'] == get_sidebar_value(payment_method_value, "payment_method")]
+        data_copy = data_copy[data_copy['PaymentMethod'] == GetSidebarElementsValue.get_sidebar_value(payment_method_value, "payment_method")]
 
-    fig = px.scatter(filtered_df, x='MonthlyCharges', y='TotalCharges', color='Churn',
+    figure = px.scatter(data_copy, x='MonthlyCharges', y='TotalCharges', color='Churn',
                      title='Total Charges vs Monthly Charges',
                      labels={'MonthlyCharges': 'Monthly Charges', 'TotalCharges': 'Total Charges'})
 
-    return fig
+    return figure
 
 # endregion
 

@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 
+
 def convert_to_csv(input_file):
     with open(input_file, 'r') as f:
         lines = f.readlines()

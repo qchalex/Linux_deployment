@@ -1,6 +1,7 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
+
 layout = html.Div(
     [
         dbc.Row(

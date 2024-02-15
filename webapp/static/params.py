@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 
 class Paths:
     PATH_LOGO = 'static/linux-ar21.svg'
-    PATH_TO_DATA = r"/data/dataset.csv"
+    PATH_TO_DATA = r"../data/dataset.csv"
 
 
 class SidebarElement:

@@ -4,6 +4,7 @@ import base64
 
 from static.params import Paths
 
+
 with open(Paths.PATH_LOGO, 'r') as f:
     svg_content = f.read()
 
