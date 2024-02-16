@@ -2,7 +2,7 @@ import dash_bootstrap_components as dbc
 from dash import html
 import base64
 
-from static.params import Paths
+from webapp.static.params import Paths
 
 
 with open(Paths.PATH_LOGO, 'r') as f:

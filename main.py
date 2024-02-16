@@ -6,12 +6,12 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
 
-from navbar import navbar
-from sidebar import sidebar
+from webapp.navbar import navbar
+from webapp.sidebar import sidebar
 from webapp.style.sidebar_style import SIDEBAR_STYLE, SIDEBAR_HIDDEN
-from layout import layout
-from static.params import Paths
-from static.get_sidebar_elements_value import GetSidebarElementsValue
+from webapp.layout import layout
+from webapp.static.params import Paths
+from webapp.static.get_sidebar_elements_value import GetSidebarElementsValue
 
 
 data = pd.read_csv(Paths.PATH_TO_DATA)

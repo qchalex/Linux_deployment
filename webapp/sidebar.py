@@ -2,7 +2,7 @@ from dash import html
 import dash_bootstrap_components as dbc
 
 from webapp.style.sidebar_style import SIDEBAR_STYLE
-from static.params import SidebarElement
+from webapp.static.params import SidebarElement
 
 sidebar = html.Div(
     [
