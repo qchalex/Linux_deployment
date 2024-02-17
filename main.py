@@ -152,3 +152,4 @@ def update_graph(gender_value, senior_citizen_value, phone_service_value, intern
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8050)
+    print('Application available at http://40.68.93.181:8050/')
