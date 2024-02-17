@@ -13,6 +13,8 @@ from webapp.layout import layout
 from webapp.static.params import Paths
 from webapp.static.get_sidebar_elements_value import GetSidebarElementsValue
 
+import warnings
+warnings.filterwarnings("ignore")
 
 data = pd.read_csv(Paths.PATH_TO_DATA)
 data['TotalCharges'] = data['TotalCharges'].replace('', pd.NA)
@@ -107,23 +109,41 @@ def update_graph(gender_value, senior_citizen_value, phone_service_value, intern
                      labels={'MonthlyCharges': 'Monthly Charges', 'TotalCharges': 'Total Charges'})
 
     churn_counts = data_copy['Churn'].value_counts()
-    figure2 = go.Figure(data=[go.Pie(labels=churn_counts.index, values=churn_counts.values)])
+    colors = ['lightblue', 'lightgreen']
+    figure2 = go.Figure(
+        data=[go.Pie(labels=churn_counts.index, values=churn_counts.values, hole=.3, marker_colors=colors)])
+    figure2.update_traces(textinfo='percent+label', textfont_size=14)
     figure2.update_layout(title='Churn Distribution')
 
-    figure3 = px.histogram(data_copy, x='MultipleLines', title='Multiple Lines Distribution')
+    figure3 = px.histogram(data_copy, x='MultipleLines', color='MultipleLines', title='Multiple Lines Distribution',
+                           pattern_shape="MultipleLines", barmode='stack')
+    figure3.update_traces(texttemplate='%{value}', textposition='outside')
+    figure3.update_layout(legend_title_text='Multiple Lines')
 
-    figure4 = px.bar(data_copy, x='StreamingTV', title='Streaming TV Distribution', color='StreamingTV')
+    streaming_tv_avg_charges = data_copy.groupby('StreamingTV')['MonthlyCharges'].mean().reset_index()
+    figure4 = px.bar(streaming_tv_avg_charges, x='StreamingTV', y='MonthlyCharges',
+                     text='MonthlyCharges', color='StreamingTV',
+                     title='Charges Mensuelles Moyennes par Statut de Streaming TV')
+    figure4.update_traces(texttemplate='%{text:.2f}', textposition='outside')
+    figure4.update_layout(xaxis_title="Statut de Streaming TV",
+                          yaxis_title="Charges Mensuelles Moyennes ($)")
 
-    figure5 = px.bar(data_copy, x='StreamingMovies', title='Streaming Movies Distribution', color='StreamingMovies')
+    # Streaming Movies Distribution - Box Plot
+    figure5 = px.box(data_copy, x='StreamingMovies', y='MonthlyCharges', color='StreamingMovies',
+                     title='Distribution des Charges Mensuelles par Catégorie de Streaming de Films')
+    figure5.update_layout(xaxis_title="Catégorie de Streaming de Films",
+                          yaxis_title="Charges Mensuelles ($)")
 
-    paperless_billing_counts = data_copy['PaperlessBilling'].value_counts()
-    figure6 = px.pie(names=paperless_billing_counts.index, values=paperless_billing_counts.values, title='Paperless Billing Distribution')
+    figure6 = px.box(data_copy, x='InternetService', y='MonthlyCharges', color='InternetService',
+                     title="Distribution des Charges Mensuelles par Type de Service Internet")
 
     online_security_counts = data_copy['OnlineSecurity'].value_counts()
-    figure7 = px.pie(names=online_security_counts.index, values=online_security_counts.values, title='Online Security Distribution')
+    figure7 = px.pie(names=online_security_counts.index, values=online_security_counts.values,
+                     title='Online Security Distribution')
 
+    # Distribution de la sauvegarde en ligne
     online_backup_counts = data_copy['OnlineBackup'].value_counts()
-    figure8 = px.pie(names=online_backup_counts.index, values=online_backup_counts.values, title='Online Backup Distribution')
+    figure8 = px.bar(x=online_backup_counts.index, y=online_backup_counts.values, title='Online Backup Distribution')
 
     return figure1, figure2, figure3, figure4, figure5, figure6, figure7, figure8
 
@@ -131,4 +151,4 @@ def update_graph(gender_value, senior_citizen_value, phone_service_value, intern
 
 
 if __name__ == '__main__':
-    app.run_server(port=8050)
+    app.run(host='0.0.0.0', port=8050)

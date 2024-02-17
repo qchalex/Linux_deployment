@@ -3,14 +3,14 @@ import dash_bootstrap_components as dbc
 
 
 class Paths:
-    PATH_LOGO = '/app/webapp/static/linux_icon.svg'
-    PATH_TO_DATA = "/app/data/dataset.csv"
+    PATH_LOGO = 'webapp/static/linux_icon.svg'
+    PATH_TO_DATA = "data/dataset.csv"
 
 
 class SidebarElement:
     GENDER = html.Div(
         [
-            dbc.CardHeader("   Gender", className='bi bi-123', style={'color': 'black', 'padding': '8px'}
+            dbc.CardHeader("   Gender", className='bi bi-gender-ambiguous', style={'color': 'black', 'padding': '8px'}
                            ),
             dbc.RadioItems(
                 id="gender",
@@ -30,7 +30,7 @@ class SidebarElement:
 
     SENIOR_CITIZEN = html.Div(
         [
-            dbc.CardHeader("   Senior Citizen", className='bi bi-123', style={'color': 'black', 'padding': '8px'}
+            dbc.CardHeader("   Senior Citizen", className='bi bi-person-raised-hand', style={'color': 'black', 'padding': '8px'}
                            ),
             dbc.RadioItems(
                 id="senior_citizen",
@@ -51,7 +51,7 @@ class SidebarElement:
 
     PHONE_SERVICE = html.Div(
         [
-            dbc.CardHeader("   Phone Service", className='bi bi-123', style={'color': 'black', 'padding': '8px'}
+            dbc.CardHeader("   Phone Service", className='bi bi-telephone', style={'color': 'black', 'padding': '8px'}
                            ),
             dbc.RadioItems(
                 id="phone_service",
@@ -71,7 +71,7 @@ class SidebarElement:
 
     INTERNET_SERVICE = html.Div(
         [
-            dbc.CardHeader("   Internet Service", className='bi bi-123', style={'color': 'black', 'padding': '8px'}),
+            dbc.CardHeader("   Internet Service", className='bi bi-wifi', style={'color': 'black', 'padding': '8px'}),
             dcc.Dropdown(
                 id="internet_service",
                 options=[
@@ -89,7 +89,7 @@ class SidebarElement:
 
     CONTRACT = html.Div(
         [
-            dbc.CardHeader("   Contract", className='bi bi-123', style={'color': 'black', 'padding': '8px'}),
+            dbc.CardHeader("   Contract", className='bi bi-journals', style={'color': 'black', 'padding': '8px'}),
             dcc.Dropdown(
                 id="contract",
                 options=[
@@ -107,7 +107,7 @@ class SidebarElement:
 
     PAYMENT_METHOD = html.Div(
         [
-            dbc.CardHeader("   Payment Method", className='bi bi-123', style={'color': 'black', 'padding': '8px'}),
+            dbc.CardHeader("   Payment Method", className='bi bi-cash-coin', style={'color': 'black', 'padding': '8px'}),
             dcc.Dropdown(
                 id="payment_method",
                 options=[
